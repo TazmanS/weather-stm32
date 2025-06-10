@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "dht11.h": "c",
+    "defines.h": "c",
+    "stdio.h": "c"
+  }
+}
