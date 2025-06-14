@@ -1,24 +1,32 @@
 #include "defines.h"
 #include "dht11.h"
-
-#include <stdio.h>
+#include "usart.h"
+#include "systick.h"
 
 int main()
 {
   RCC_AHBENR |= (1 << 17);
+  RCC_APB1ENR |= (1 << 17);
 
-  uint8_t temp = 0, hum = 0;
+  uart_init();
+
+  uint8_t temp = 0, hum = 0, status;
+  uart_send_str("Terminal ready\r\n");
+
   while (1)
   {
-    if (DHT11_Read(&temp, &hum) == 0)
+    status = DHT11_Read(&temp, &hum);
+    if (status == 0)
     {
-      printf("Temp: %d°C, Humidity: %d%%\n", temp, hum);
+      char buf[64];
+      sprintf(buf, "Temp: %d°C, Humidity: %d%%\n", temp, hum);
+      uart_send_str(buf);
     }
     else
     {
-      printf("Error DHT11\n");
+      uart_send_str("Error DHT11\n");
     }
 
-    delay_us(2000);
+    delay_ms(2000);
   }
 }
