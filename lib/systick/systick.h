@@ -3,7 +3,8 @@
 
 #include "defines.h"
 
-void delay_us(uint32_t us);
-void delay_ms(uint32_t us);
+void systick_init_for_millis();
+uint32_t millis();
+void SysTick_Handler();
 
 #endif

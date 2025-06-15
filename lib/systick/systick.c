@@ -1,17 +1,20 @@
 #include "systick.h"
 
-void delay_us(uint32_t us)
+volatile uint32_t ms_ticks = 0;
+
+void SysTick_Handler()
 {
-  SYSTICK_LOAD = (8000000 / 1000000 - 1) * us;
-  SYSTICK_VAL = 0;
-  SYSTICK_CTRL = SYSTICK_CLKSOURCE | SYSTICK_ENABLE;
-  while (!(SYSTICK_CTRL & SYSTICK_COUNTFLAG))
-    ;
-  SYSTICK_CTRL = 0;
+  ms_ticks++;
 }
 
-void delay_ms(uint32_t ms)
+uint32_t millis()
 {
-  while (ms--)
-    delay_us(1000);
+  return ms_ticks;
+}
+
+void systick_init_for_millis()
+{
+  SYSTICK_LOAD = (SystemCoreClock / 1000) - 1;
+  SYSTICK_VAL = 0;
+  SYSTICK_CTRL = 7;
 }

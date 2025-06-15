@@ -2,7 +2,7 @@
 #define __DHT11_H__
 
 #include "defines.h"
-#include "systick.h"
+#include "tim2.h"
 
 uint8_t DHT11_Read(uint8_t *temperature, uint8_t *humidity);
 
