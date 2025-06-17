@@ -1,22 +1,35 @@
 #include "tim2.h"
 
-void tim2_init(void)
-{
-  RCC_APB1ENR |= (1 << 0);
+#define RCC_APB1ENR (*(volatile uint32_t *)0x4002101C)
+#define TIM3_CR1 (*(volatile uint32_t *)0x40000400)
+#define TIM3_DIER (*(volatile uint32_t *)0x4000040C)
+#define TIM3_SR (*(volatile uint32_t *)0x40000410)
+#define TIM3_CNT (*(volatile uint32_t *)0x40000424)
+#define TIM3_PSC (*(volatile uint32_t *)0x40000428)
+#define TIM3_ARR (*(volatile uint32_t *)0x4000042C)
 
-  TIM2_PSC = (SystemCoreClock / 1000000) - 1;
-  TIM2_CR1 |= (1 << 0);
+volatile uint32_t ms_ticks = 0;
+
+void tim3_millis_init(void)
+{
+  RCC_APB1ENR |= (1 << 1);
+
+  TIM3_PSC = (8000000 / 1000) - 1;
+  TIM3_ARR = 1;
+  TIM3_DIER |= (1 << 0);
+  TIM3_CR1 |= (1 << 0);
 }
 
-void delay_us(uint32_t us)
+void TIM3_IRQHandler(void)
 {
-  uint32_t start = TIM2_CNT;
-  while ((TIM2_CNT - start) < us)
-    ;
+  if (TIM3_SR & 0x1)
+  {
+    TIM3_SR &= ~0x1;
+    ms_ticks++;
+  }
 }
 
-void delay_ms(uint32_t ms)
+uint32_t millis(void)
 {
-  while (ms--)
-    delay_us(1000);
+  return ms_ticks;
 }

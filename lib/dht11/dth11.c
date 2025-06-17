@@ -23,46 +23,30 @@ void dht_write_low(void)
   GPIOA_ODR &= ~DHT11_PIN_MASK;
 }
 
-void dht_delay_us(uint32_t us)
-{
-  SYSTICK_LOAD = (8000000 / 1000000 - 1) * us;
-  SYSTICK_VAL = 0;
-  SYSTICK_CTRL = SYSTICK_CLKSOURCE | SYSTICK_ENABLE;
-  while (!(SYSTICK_CTRL & SYSTICK_COUNTFLAG))
-    ;
-  SYSTICK_CTRL = 0;
-}
-
-void dht_delay_ms(uint32_t ms)
-{
-  while (ms--)
-    delay_us(1000);
-}
-
 uint8_t DHT11_Read(uint8_t *temp, uint8_t *hum)
 {
   uint8_t data[5] = {0};
 
   dht_set_output();
   dht_write_low();
-  dht_delay_ms(18);
+  delay_ms(18);
   dht_write_high();
-  dht_delay_us(30);
+  delay_us(30);
   dht_set_input();
 
-  dht_delay_us(40);
+  delay_us(40);
   if (GPIOA_IDR & (1 << DHT11_PIN))
     return 1;
-  dht_delay_us(80);
+  delay_us(80);
   if (!(GPIOA_IDR & (1 << DHT11_PIN)))
     return 2;
-  dht_delay_us(80);
+  delay_us(80);
 
   for (int i = 0; i < 40; i++)
   {
     while (!(GPIOA_IDR & (1 << DHT11_PIN)))
       ;
-    dht_delay_us(30);
+    delay_us(30);
     if (GPIOA_IDR & (1 << DHT11_PIN))
       data[i / 8] = (data[i / 8] << 1) | 1;
     else

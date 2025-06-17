@@ -4,6 +4,7 @@
     "defines.h": "c",
     "stdio.h": "c",
     "usart.h": "c",
-    "systick.h": "c"
+    "systick.h": "c",
+    "tim2.h": "c"
   }
 }

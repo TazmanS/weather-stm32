@@ -3,8 +3,8 @@
 
 #include "defines.h"
 
-void tim2_init();
-void delay_us(uint32_t us);
-void delay_ms(uint32_t ms);
+void tim3_millis_init(void);
+uint32_t millis(void);
+extern void TIM3_IRQHandler(void);
 
 #endif
