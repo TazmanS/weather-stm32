@@ -1,5 +1,5 @@
-#ifndef __TIM2_H__
-#define __TIM2_H__
+#ifndef __TIM3_H__
+#define __TIM3_H__
 
 #include "defines.h"
 

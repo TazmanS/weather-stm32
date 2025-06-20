@@ -41,13 +41,12 @@ extern uint32_t SystemCoreClock;
 #define SYSTICK_LOAD (*(volatile uint32_t *)0xE000E014)
 #define SYSTICK_VAL (*(volatile uint32_t *)0xE000E018)
 
-#define SYSTICK_CLKSOURCE (1 << 2)
-#define SYSTICK_ENABLE (1 << 0)
-#define SYSTICK_COUNTFLAG (1 << 16)
-
-// TIM2
-#define TIM2_PSC (*(volatile uint32_t *)0x40000028)
-#define TIM2_CR1 (*(volatile uint32_t *)0x40000000)
-#define TIM2_CNT (*(volatile uint32_t *)0x40000024)
+// TIM3
+#define TIM3_CR1 (*(volatile uint32_t *)0x40000400)
+#define TIM3_DIER (*(volatile uint32_t *)0x4000040C)
+#define TIM3_SR (*(volatile uint32_t *)0x40000410)
+#define TIM3_CNT (*(volatile uint32_t *)0x40000424)
+#define TIM3_PSC (*(volatile uint32_t *)0x40000428)
+#define TIM3_ARR (*(volatile uint32_t *)0x4000042C)
 
 #endif

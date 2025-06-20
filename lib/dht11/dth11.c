@@ -4,13 +4,13 @@
 
 void dht_set_output(void)
 {
-  GPIOA_MODER &= ~(0x3 << (DHT11_PIN * 2));
-  GPIOA_MODER |= (0x1 << (DHT11_PIN * 2));
+  GPIOA_MODER &= ~(0b11 << (DHT11_PIN * 2));
+  GPIOA_MODER |= (0b01 << (DHT11_PIN * 2));
 }
 
 void dht_set_input(void)
 {
-  GPIOA_MODER &= ~(0x3 << (DHT11_PIN * 2));
+  GPIOA_MODER &= ~(0b11 << (DHT11_PIN * 2));
 }
 
 void dht_write_high(void)

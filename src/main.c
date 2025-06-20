@@ -3,7 +3,7 @@
 #include "usart.h"
 #include "systick.h"
 #include "four_digit_seven_seg.h"
-#include "tim2.h"
+#include "tim3.h"
 
 #define NVIC_ISER0 (*(volatile uint32_t *)0xE000E100)
 
@@ -17,6 +17,7 @@ int main()
   RCC_AHBENR |= (1 << 17);
   RCC_AHBENR |= (1 << 18);
   RCC_APB1ENR |= (1 << 17);
+  RCC_APB1ENR |= (1 << 1);
 
   uart_init();
   tim3_millis_init();

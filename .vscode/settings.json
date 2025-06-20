@@ -5,6 +5,8 @@
     "stdio.h": "c",
     "usart.h": "c",
     "systick.h": "c",
-    "tim2.h": "c"
+    "tim2.h": "c",
+    "tim3.h": "c",
+    "stdint.h": "c"
   }
 }
